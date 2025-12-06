@@ -1,179 +1,187 @@
-# Phase 4 Project Description
-
-Final phase down -- you're absolutely crushing it! You've made it all the way through one of the toughest phases of this course. You must have an amazing brain in your head!
-
-You have one last project to complete before the Capstone. In this project description, we will cover:
-
-* Project Overview
-* Deliverables
-* Grading
-* Getting Started
+# Sentiment Analysis of SXSW 2011 Tweets - README
 
 ## Project Overview
 
-For this project, you will engage in an **advanced supervised modeling process** from start to finish, solving either a classification or a regression problem using an advanced dataset.
+This project performs sentiment analysis on tweets from the SXSW 2011 conference to analyze customer opinions about technology brands and products. The goal is to help businesses understand customer perception, prioritize product improvements, and measure satisfaction by automatically classifying tweets as positive, negative, or neutral.
 
-### Business Problem and Data
+## Business Problem
+Businesses struggle to:
 
-Similar to the Phase 3 project, you are responsible for choosing a dataset as well as defining a stakeholder and business problem. In addition to these choices, you can choose between any of the advanced supervised modeling techniques covered in Phase 4:
+* Determine customer sentiment from unstructured social media data.
 
-- Recommendation Systems
-- Model Interpretability
-- Natural Language Processing
+* Prioritize product improvements based on customer feedback.
 
-You should also think about how you will interpret and explain your models results to your audience.
+* Predict customer churn and measure satisfaction.
 
-For complete details, see [Phase 4 Project - Choosing a Dataset](https://github.com/learn-co-curriculum/dsc-phase-4-choosing-a-dataset-v3).
+* Identify what customers value vs. what needs improvement.
 
-### Key Points
+## Solution
+A machine learning pipeline that:
 
-### Advanced Data Types and Modeling
+* Processes and cleans tweet data.
 
-The purpose of this project is to demonstrate that you have mastered the basics of some type of modeling technique beyond the techniques introduced in Phase 3. This is your chance to tailor your work to a **data science audience** in particular, with a clear notebook narrative that illustrates your process. The resulting presentation slides will be substantially similar to a Phase 3 presentation, but someone reading your notebook should be able to see your grasp of the specific advanced modeling technique.
+* Classifies sentiment using multiple ML algorithms.
 
-### Validation Strategy
+* Analyzes brand-specific sentiment patterns.
 
-A **validation strategy** means a strategy to demonstrate that your model will actually perform well on unseen data. You could use the `train_test_split` function from scikit-learn. This may or may not be appropriate for the project you select. Make sure that you are thinking about this strategy from the start and incorporating it into your notebook narrative.
+* Provides actionable business insights for product development.
 
-### Choosing a Dataset
+## Dataset
+* Source: SXSW 2011 conference tweets.
 
-We've given you a lot of choices - don't get stuck spending too much time choosing which project to do. Give yourself a firm time limit for picking a project (e.g. 2 hours) so you can get on with making something great. Don't worry about picking the perfect project - remember that you will get to do a new, larger Capstone project very soon!
+* Size: 9,093 tweets after cleaning.
 
-## The Deliverables
+* Features:
 
-There are three deliverables for this project:
+1. tweet_text: Original tweet content.
 
-* A **non-technical presentation**
-* A **Jupyter Notebook**
-* A **GitHub repository**
+2. emotion_in_tweet_is_directed_at: Brand/product mentioned.
 
-The checklist of requirements for Phase 4 will are outlined below, and this will also be the checklist for Capstone.
+3. is_there_an_emotion_directed_at_a_brand_or_product: Sentiment label.
 
-### Non-Technical Presentation
+* Sentiment Distribution (original):
 
-The non-technical presentation should be very similar to the presentation you gave in Phase 3. You can feel free to mention the specific models and metrics you used, but make sure you translate everything for an audience who is not familiar with data science.
+Positive: 33%
 
-### Jupyter Notebook
+Neutral: 60%
 
-The notebook will have the same checklist elements as in Phase 3. However, **this time around the Communication rubric element will focus on the technical notebook**. A data science professional reading your notebook should be able to understand all of your data preparation and modeling decisions.
+Negative: 7%
 
-### GitHub Repository
+### Key Challenges & Solutions
+#### 1. Class Imbalance
 
-The GitHub repository should also be very similar to the Phase 3 repository.
+![Distribution of sentiment lables (%)](https://github.com/Joan-omanyo/dsc-phase-4-project-v3-group-6/blob/main/images/Distribution%20of%20sentiment%20lables.png)
 
-The main additional element to consider is **reproducibility**, since many of the dataset options are too large to be saved directly in a GitHub repository. Make sure you include clear instructions for how someone would reproduce your modeling process, potentially including any scripts you used to organize data into directories.
+Problem: Severe imbalance (Neutral: 60%, Negative: 7%)
 
-## Grading
+Solution: Applied SMOTE (Synthetic Minority Oversampling) to balance all classes to 5,388 instances each
 
-***To pass this project, you must pass each rubric objective.*** The project rubric objectives for Phase 4 are:
+#### 2. Text Preprocessing
 
-1. Advanced ML Communication
-2. Advanced Data Preparation
-3. Advanced ML Modeling
+Removed URLs, mentions, hashtags, and special characters.
 
-### Advanced ML Communication
+Applied lemmatization and stopword removal.
 
-You are expected to communicate the results of an ML modeling process. We are looking for *rationale, results, limitations, and recommendations.*
+Used TF-IDF with n-grams (unigrams + bigrams).
 
-In Phase 4, the emphasis is on the **Jupyter Notebook**. The notebook should include a **summary** at the beginning that briefly and accurately describes your process. The summary should be approximately 250 words -- about the size of a research paper abstract.
+#### 3. Feature Selection
 
-Summary elements:
+Used Chi-squared test for feature selection.
 
-* Business and data understanding: *what kind of data are you using, and what makes it well-suited for the business problem?*
-  * You do not need to include any data visualizations in your summary, but consider including relevant descriptive statistics
-* Data preparation: *why did you choose the data preparation steps that you did, and what was the result?*
-  * This should be specific to the kind of data you are working with. For example, if you are doing an NLP project, what did you decide to do with stopwords?
-  * Be sure to list the packages/libraries used to prepare the data, and why
-* Modeling: *what modeling package(s) did you use, which model(s) within the package(s), and what tuning steps did you take?*
-  * For some projects there may be only one applicable package; you should still briefly explain why this was the appropriate choice
-* Evaluation: *how well did your final model perform?*
-  * Include one or more relevant metrics
-  * Be sure to briefly describe your validation approach
+Optimal: 2,000 features provided best F1-score (0.6444).
 
-#### Exceeds Objective
+##### Model Performance
 
-Communicates advanced modeling summary as well as a narrative throughout the notebook text that demonstrates mastery of an advanced topic
+Model Rankings (Accuracy)
 
-> Decisions should be justified and outcomes evaluated in Markdown throughout the notebook
+* Random Forest: 69.1% (F1: 66.8%)
 
-#### Meets Objective (Passing Bar)
+* Voting Classifier: 65.5% (F1: 64.5%)
 
-Successfully communicates a summary of an advanced modeling technique including business and data understanding, data preparation, modeling, and evaluation
+* SVM: 64.6% (F1: 60.5%)
 
-> It is possible to meet this bar with just a summary and not a narrative throughout the notebook, so long as the steps taken are justifiable and free of major errors. See the Approaching Objective section for an explanation of what a "major error" means.
+* Logistic Regression: 64.1% (F1: 61.8%)
 
-#### Approaching Objective
+* Multinomial NB: 63.2% (F1: 62.6%)
 
-Communicates advanced modeling summary with at least one major error
+* Baseline (Naive Bayes): 64.8% (F1: 64.8%)
 
-> A major error means that one of the required elements of the summary was missing, or some aspect of the communication was fundamentally incorrect. For example, if you stated that you performed "deep learning" when you actually used `CountVectorizer` and `MultinomialNB` from scikit-learn, that would be a major error. Another example would be if you described a regression task as a classification task, or if you described supervised learning as unsupervised learning.
+###### Best Model
 
-#### Does Not Meet Objective
+Algorithm: Random Forest
 
-Does not communicate advanced modeling summary
+Accuracy: 69.1%
 
-> Markdown headings and occasional narrative text throughout the notebook are not sufficient in this phase, even if they were in previous phases. You need to include a summary at the beginning of your notebook.
+Improvement over baseline: 6.5%
 
-### Advanced Data Preparation
+#### Brand-Specific Insights
+![Top 10 most mentioned brands](https://github.com/Joan-omanyo/dsc-phase-4-project-v3-group-6/blob/main/images/Top%2010%20most%20mentioned%20brands.png)
 
-Once again, this objective is very similar to Phase 3, although the complexity has increased.
+Top Performing Brands (Highest Positive %)
 
-#### Exceeds Objective
+iPad or iPhone App: 60.6% positive
 
-Goes above and beyond with data preparation, such as feature engineering, using pipelines, or using unsupervised techniques
+Apple: 43.3% positive
 
-> Supervised learning is the core of this project, but feel free to use unsupervised techniques for data analysis or preparation
+iPad: 40.0% positive
 
-#### Meets Objective (Passing Bar)
+Brands Needing Attention (Highest Negative %)
+Google: 7.1% negative
 
-Successfully prepares data for modeling, using at least one Python package other than scikit-learn
+iPhone: 5.0% negative
 
-> Your final model does not need to use anything other than scikit-learn, but you should explore other tools during your modeling process
+iPad or iPhone App: 4.3% negative
 
-#### Approaching Objective
+### Key Business Recommendations
+1. Leverage Strengths
+Focus on App Ecosystem: iPad/iPhone apps show highest positive sentiment (60.6%).
 
-Prepares some data successfully, but has at least one major error
+Amplify Apple's Success: Apple brand maintains strong positive perception.
 
-#### Does Not Meet Objective
+Capitalize on Emotional Engagement: Apps generate the most emotional response.
 
-Does not prepare data for modeling
+2. Address Weaknesses
+Investigate Google's Perception: Highest negative sentiment (7.1%) requires attention.
 
-### Advanced ML Modeling
+Diagnose iPhone Pain Points: Despite overall positivity, 5% negative sentiment indicates specific issues.
 
-This is your real opportunity to flex those new Phase 4 skills!
+Monitor App Quality: Even top-performing apps have 4.3% negative feedback.
 
-#### Exceeds Objective
+3. Strategic Actions
+Product Development: Use negative feedback for targeted improvements.
 
-Goes above and beyond in the modeling process, such as using models from multiple different packages and different model explainability tools
+Marketing Strategy: Highlight strengths in app ecosystem.
 
-> You are encouraged but not required to use models from multiple different packages. The feasibility of this depends on your choice of project. For time series, this might mean trying both StatsModels and Prophet. For image classification, this might mean using TensorFlow with and without transfer learning.
+Competitive Analysis: Monitor sentiment trends across brands.
 
-> See [this book chapter](https://christophm.github.io/interpretable-ml-book/lime.html) for an introduction to LIME for model explainability
+Continuous Monitoring: Establish ongoing sentiment tracking.
 
-#### Meets Objective (Passing Bar)
+Pipeline Components
 
-Successfully builds and evaluates multiple models using an appropriate model validation technique and uses built in model explainability tools
+* Data Loading & Cleaning
 
-> As noted previously, the `train_test_split` from scikit-learn may or may not be appropriate for your modeling task. Be sure to investigate appropriate techniques so you are confident in the performance of your final model on unseen data
+* Text Preprocessing
 
-#### Approaching Objective
+* Feature Engineering (TF-IDF)
 
-Builds multiple models with at least one major error
+* Class Balancing (SMOTE)
 
-#### Does Not Meet Objective
+* Model Training & Evaluation
 
-Does not build multiple models and does not use model explanability
+* Hyperparameter Tuning
 
-## Getting Started
+* Ensemble Methods
 
-Please start by reviewing the contents of this project description. If you have any questions, please ask your instructor ASAP.
+#### Future Improvements
+* Technical Enhancements
+Transformer Models: Implement BERT or RoBERTa for better context understanding.
 
-Once you are ready to begin the project, you will need to complete the Project Proposal.
+Advanced Balancing: Try different oversampling/undersampling techniques.
 
-Recall that more information is available in [Phase 4 Project - Choosing a Dataset](https://github.com/learn-co-curriculum/dsc-phase-4-choosing-a-dataset).
+Feature Engineering: Incorporate sentiment lexicons and emotion scores.
 
-To get started with project development, create a new repository on GitHub. For this project, we recommend that you do not fork the template repository, but rather that you make a new repository from scratch, starting by going to [github.com/new](https://github.com/new).
+Real-time Analysis: Build streaming pipeline for live tweet analysis.
 
-## Summary
+* Business Applications
+Dashboard Development: Create real-time sentiment monitoring dashboard.
 
-This project is your chance to show off your data science prowess with some advanced machine learning algorithms. Now that you've gone through all of the core course content, we're excited to see what you are able to do!
+Competitive Intelligence: Expand to multiple social media platforms.
+
+Trend Analysis: Track sentiment changes over time.
+
+Alert System: Set up notifications for negative sentiment spikes.
+
+### Conclusion
+This project successfully:
+
+1. Built a functional sentiment analysis model with 69.1% accuracy.
+
+2. Identified key brand sentiment patterns.
+
+3. Provided actionable business recommendations.
+
+4. Established a repeatable feedback loop for product improvement.
+
+5. Delivered a deployable model with clear performance metrics.
+
+The model serves as a foundation for automated customer feedback analysis, enabling data-driven decision making for product development and marketing strategy.

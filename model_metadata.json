@@ -1,0 +1,7 @@
+{
+  "best_model": "Random Forest",
+  "best_accuracy": 0.6912751677852349,
+  "baseline_accuracy": 0.6493288590604027,
+  "improvement_percentage": 6.459948320413432,
+  "training_date": "2025-12-03 12:38:09"
+}
